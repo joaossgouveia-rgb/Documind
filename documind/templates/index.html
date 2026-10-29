@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>DocuMind - RAG MVP</title>
+</head>
+<body>
+    <h1>DocuMind</h1>
+    <p>Pergunte sobre qualquer documento PDF ou TXT.</p>
+
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <p>
+            <label for="arquivo"><b>1. Selecione o Documento (.pdf ou .txt):</b></label><br>
+            <input type="file" id="arquivo" name="arquivo" accept=".pdf,.txt" required>
+        </p>
+
+        <p>
+            <label for="pergunta"><b>2. Qual é a sua pergunta sobre o documento?</b></label><br>
+            <input type="text" id="pergunta" name="pergunta" size="60" placeholder="Ex: Qual é o prazo de entrega estipulado?" required>
+        </p>
+
+        <button type="submit">Analisar e Responder</button>
+    </form>
+
+    <hr>
+
+    {% if pergunta %}
+        <h2>Pergunta: "{{ pergunta }}"</h2>
+
+        <h3>Resposta da IA:</h3>
+        <p><strong>{{ resposta }}</strong></p>
+
+        <h3>Trechos de Origem Utilizados:</h3>
+        <ul>
+            {% for fonte in fontes %}
+                <li>
+                    <strong>{{ fonte.origem }}:</strong> {{ fonte.texto[:250] }}...
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
